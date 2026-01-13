@@ -38,7 +38,32 @@
 
 function minEatingSpeed(piles: number[], h: number): number {
     // Your solution here
-    return -1;
+    let start = 1;
+    let max = 0;
+    let total = 0;
+    let k;
+    let result = -1;
+
+    for (let i=0; i< piles.length; i++) {
+        total+= piles[i];
+        max = piles[i] > max ? piles[i] : max;
+    }
+
+    while (start <= max) {
+        k = Math.floor((start + max) / 2);
+
+        const hours = hoursNeeded(piles, k);
+
+        if (hours <= h) {
+            max = k - 1;
+            result = k;
+        } else {
+            start = k + 1;
+        }
+    }
+
+
+    return result;
 }
 
 // Helper: Calculate hours needed at speed k

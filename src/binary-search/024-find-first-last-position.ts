@@ -33,27 +33,13 @@
 function searchRange(nums: number[], target: number): number[] {
     // Your solution here
     
-    
-    
-    // Find last
-
-    start = 0;
-    end = nums.length -1;
-    mid = -1;
-    while (start <= end) {
-        mid = Math.floor((start + end) / 2);
-        if (target === nums[mid]) {
-            start = mid + 1;
-            result[1] = mid; 
-        } else if (target > nums[mid]) {
-            start = mid + 1;
-        } else {
-            end = mid -1;
-        }
+    const first = findBound(nums, target, true);
+    if (first !== -1) {
+        const second = findBound(nums, target, false);
+        return [first, second]
+    } else {
+        return [-1 , -1];
     }
-    
-
-    return result;
 
 }
 
@@ -61,19 +47,16 @@ function findBound(nums : number[], target: number, findFirst:boolean) {
 
     let start = 0;
     let end = nums.length -1;
-    let mid = -1;
     let result = -1
     // find first
     while (start <= end) {
-        mid = Math.floor((start + end) / 2);
+        let  mid = Math.floor((start + end) / 2);
         if (target === nums[mid]) {
-
             if (findFirst) {
                 end = mid -1;
             } else {
                 start = start + 1;
             }
-            
             result = mid; 
         } else if (target > nums[mid]) {
             start = mid + 1;
