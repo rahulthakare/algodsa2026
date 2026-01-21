@@ -6,10 +6,10 @@
  * The LCA is defined as the lowest node in the tree that has both p and q 
  * as descendants (a node can be a descendant of itself).
  * 
- * Example 1:
- *          3
+ * Example 1: p = 5, q = 1
+ *         [3]  ← LCA (lowest node with both 5 and 1 as descendants)
  *        /   \
- *       5     1
+ *      (5)   (1)
  *      / \   / \
  *     6   2 0   8
  *        / \
@@ -18,12 +18,22 @@
  *   Output: 3
  *   Explanation: LCA of nodes 5 and 1 is 3.
  * 
- * Example 2:
+ * Example 2: p = 5, q = 4
+ *          3
+ *        /   \
+ *      [5]    1      ← LCA is 5 (5 is ancestor of itself and 4)
+ *      / \   / \
+ *     6   2 0   8
+ *        / \
+ *       7  (4)
  *   Input: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4
  *   Output: 5
  *   Explanation: LCA of nodes 5 and 4 is 5 (a node can be its own ancestor).
  * 
- * Example 3:
+ * Example 3: p = 1, q = 2
+ *      [1]  ← LCA (1 is ancestor of itself and 2)
+ *      /
+ *    (2)
  *   Input: root = [1,2], p = 1, q = 2
  *   Output: 1
  * 
@@ -39,7 +49,19 @@ function lowestCommonAncestor(
     q: TreeNode | null
 ): TreeNode | null {
     // Your solution here
-    return null;
+    if (root === null) return null;
+    if( root === p || root === q) return root;
+
+    const left = lowestCommonAncestor(root.left, p, q);
+    const right = lowestCommonAncestor(root.right, p, q);
+
+    if (left !== null && right !== null) {
+        return root;
+    }
+
+
+    return left ?? right;
+
 }
 
 // Helper to find a node by value

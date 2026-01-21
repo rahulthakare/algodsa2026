@@ -42,13 +42,16 @@
 import { TreeNode, createTree } from './tree-node';
 
 function isValidBST(root: TreeNode | null): boolean {
-    // Your solution here
-    if (root === null) return true;
-    // if(root.left === null && root.right === null) return true;
+    
+    function validate(node: TreeNode | null,  min : number, max: number): boolean {
+        if(node === null) return true;
 
-    if(root.left && root.right && (root.left.val > root.val || root.right.val < root.val)) return false;
+        if (node.val < min || node.val > max) return false;
 
-    return isValidBST(root.left) && isValidBST(root.right);
+        return validate(node.left, min, node.val) && validate(node.right, node.val, max)
+    }
+
+    return validate(root, -Infinity, Infinity);
 }
 
 // Test cases
